@@ -2,13 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import Login from './pages/Login';
 
 function App() {
   return (
     <div className="meals">
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/foods" component={ Foods } />
+        {/* <Route path="/foods" component={ Foods } />
         <Route exact path="/drinks" component={ Drinks } />
         <Route path="/foods/:id" component={ FoodDetails } />
         <Route path="/drinks/:id" component={ DrinksDetails } />
@@ -22,7 +23,7 @@ function App() {
         <Route path="/explore/foods/nationalities" component={ ExploreFoodsNat } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
-        <Route path="/favorite-recipes" component={ Favorites } />
+        <Route path="/favorite-recipes" component={ Favorites } /> */}
       </Switch>
     </div>
   );
