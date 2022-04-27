@@ -14,6 +14,7 @@ function Profile({ history }) {
       <Header
         headerTitle="Profile"
         noSearch
+        history={ history }
       />
       <h2 data-testid="profile-email">
         {localUser}
@@ -48,4 +49,5 @@ function Profile({ history }) {
 Profile.propTypes = {
   history: PropTypes.func.isRequired,
 };
+
 export default Profile;

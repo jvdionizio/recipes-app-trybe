@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import profileImg from '../images/profileIcon.svg';
 import searchImg from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ headerTitle, noSearch }) {
+function Header({ headerTitle, noSearch, history }) {
   const [showSearchBar, setShowSearchBar] = useState(false);
 
   return (
     <div>
-      <Link
-        to="/profile"
-      >
-        <img
+      <Link to="/profile">
+        <input
           data-testid="profile-top-btn"
+          type="image"
+          alt="search"
           src={ profileImg }
-          alt="profilePage"
+          onClick={ () => history.push('/profile') }
         />
-
       </Link>
       <h2
         data-testid="page-title"
@@ -45,6 +45,7 @@ function Header({ headerTitle, noSearch }) {
 }
 
 Header.propTypes = {
+  history: PropTypes.func.isRequired,
   headerTitle: PropTypes.string.isRequired,
   noSearch: PropTypes.bool.isRequired,
 };

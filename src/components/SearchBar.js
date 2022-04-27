@@ -6,6 +6,7 @@ function SearchBar() {
       <form>
         <input
           type="text"
+          data-testid="search-input"
         />
         <label htmlFor="SearchType">
           <label htmlFor="ing">

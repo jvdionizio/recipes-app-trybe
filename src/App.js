@@ -24,21 +24,41 @@ function App() {
     <div className="meals">
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/foods" component={ Foods } />
+        <Route exact path="/foods" component={ Foods } />
         <Route exact path="/drinks" component={ Drinks } />
-        <Route path="/foods/:id" component={ FoodDetails } />
-        <Route path="/drinks/:id" component={ DrinksDetails } />
-        <Route path="/foods/:id/in-progress" component={ FoodInProgress } />
-        <Route path="/drinks/:id/in-progress" component={ DrinkInProgress } />
-        <Route path="/explore" component={ Explore } />
-        <Route path="/explore/foods" component={ ExploreFoods } />
-        <Route path="/explore/drinks" component={ ExploreDrinks } />
-        <Route path="/explore/foods/ingredients" component={ ExploreFoodsIng } />
-        <Route path="/explore/drinks/ingredients" component={ ExploreDrinksIng } />
-        <Route path="/explore/foods/nationalities" component={ ExploreFoodsNat } />
-        <Route path="/profile" component={ Profile } />
-        <Route path="/done-recipes" component={ DoneRecipes } />
-        <Route path="/favorite-recipes" component={ Favorites } />
+        <Route
+          exact
+          path="/foods/:id"
+          render={ (props) => (
+            <FoodDetails
+              { ...props }
+            />
+          ) }
+        />
+        <Route
+          exact
+          path="/drinks/:id"
+          component={ DrinksDetails }
+        />
+        <Route
+          exact
+          path="/foods/:id/in-progress"
+          render={ (props) => (
+            <FoodInProgress
+              { ...props }
+            />
+          ) }
+        />
+        <Route exact path="/drinks/:id/in-progress" component={ DrinkInProgress } />
+        <Route exact path="/explore" component={ Explore } />
+        <Route exact path="/explore/foods" component={ ExploreFoods } />
+        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+        <Route exact path="/explore/foods/ingredients" component={ ExploreFoodsIng } />
+        <Route exact path="/explore/drinks/ingredients" component={ ExploreDrinksIng } />
+        <Route exact path="/explore/foods/nationalities" component={ ExploreFoodsNat } />
+        <Route exact path="/profile" component={ Profile } />
+        <Route exact path="/done-recipes" component={ DoneRecipes } />
+        <Route exact path="/favorite-recipes" component={ Favorites } />
       </Switch>
     </div>
   );
