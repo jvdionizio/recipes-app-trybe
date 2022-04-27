@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer/Footer';
 
 function Profile({ history }) {
   const [localUser, setLocalUser] = useState('');
@@ -36,6 +37,7 @@ function Profile({ history }) {
           Logout
         </button>
       </Link>
+      <Footer />
     </div>
   );
 }
