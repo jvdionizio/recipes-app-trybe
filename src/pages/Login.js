@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as theMealdbApi from '../helpers/TheMealDBAPI';
+import * as thecocktaildb from '../helpers/TheCockTailDBAPI';
 
 function Login({ history }) {
   const [login, setLogin] = useState({
@@ -7,6 +9,14 @@ function Login({ history }) {
     password: '',
     IsDisable: true,
   });
+  useEffect(() => {
+    theMealdbApi.getByFirstLetter('a');
+    theMealdbApi.getByIngredients('butter');
+    theMealdbApi.getByName('pie');
+    thecocktaildb.getByFirstLetter('a');
+    thecocktaildb.getByIngredients('apple');
+    thecocktaildb.getByName('margarita');
+  }, []);
   const validateButton = () => {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const SEIS = 6;

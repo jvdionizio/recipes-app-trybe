@@ -32,13 +32,13 @@ function App() {
         <Route exact path="/drinks/:id/in-progress" component={ DrinkInProgress } />
         <Route exact path="/explore" component={ Explore } />
         <Route exact path="/explore/foods" component={ ExploreFoods } />
-        <Route path="/explore/drinks" component={ ExploreDrinks } />
+        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
         <Route exact path="/explore/foods/ingredients" component={ ExploreFoodsIng } />
-        <Route path="/explore/drinks/ingredients" component={ ExploreDrinksIng } />
+        <Route exact path="/explore/drinks/ingredients" component={ ExploreDrinksIng } />
         <Route exact path="/explore/foods/nationalities" component={ ExploreFoodsNat } />
-        <Route path="/profile" component={ Profile } />
-        <Route path="/done-recipes" component={ DoneRecipes } />
-        <Route path="/favorite-recipes" component={ Favorites } />
+        <Route exact path="/profile" component={ Profile } />
+        <Route exact path="/done-recipes" component={ DoneRecipes } />
+        <Route exact path="/favorite-recipes" component={ Favorites } />
       </Switch>
     </div>
   );
