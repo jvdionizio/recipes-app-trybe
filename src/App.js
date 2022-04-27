@@ -18,18 +18,6 @@ import FoodInProgress from './pages/FoodInProgress';
 import Foods from './pages/Foods';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import Foods from './pages/Foods';
-import Drinks from './pages/Drinks';
-import Explore from './pages/Explore';
-import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinks from './pages/ExploreDrinks';
-import ExploreFoodsIng from './pages/ExploreFoodsIng';
-import ExploreDrinksIng from './pages/ExploreDrinksIng';
-import ExploreFoodsNat from './pages/ExploreFoodsNat';
-import FoodDetails from './pages/FoodDetails';
-import DrinksDetails from './pages/DrinksDetails';
-import FoodInProgress from './pages/FoodInProgress';
-import DrinkInProgress from './pages/DrinkInProgress';
 
 function App() {
   return (
