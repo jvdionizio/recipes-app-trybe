@@ -10,21 +10,18 @@ function Footer() {
     <div data-testid="footer" className={ style.footerContainer }>
       <Link
         to="/drinks"
-        data-testid="drinks-bottom-btn"
       >
-        <img src={ drinkImg } alt="drink" />
+        <img src={ drinkImg } alt="drink" data-testid="drinks-bottom-btn" />
       </Link>
       <Link
         to="/explore"
-        data-testid="explore-bottom-btn"
       >
-        <img src={ exploreImg } alt="explore" />
+        <img src={ exploreImg } alt="explore" data-testid="explore-bottom-btn" />
       </Link>
       <Link
         to="/foods"
-        data-testid="food-bottom-btn"
       >
-        <img src={ mealImg } alt="meal" />
+        <img src={ mealImg } alt="meal" data-testid="food-bottom-btn" />
       </Link>
     </div>
   );

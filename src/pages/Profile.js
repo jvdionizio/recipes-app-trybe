@@ -7,7 +7,8 @@ function Profile({ history }) {
   const [localUser, setLocalUser] = useState('');
   useEffect(() => {
     const getUser = JSON.parse(localStorage.getItem('user'));
-    setLocalUser(getUser.email);
+    const testUser = getUser !== null ? setLocalUser(getUser.email) : '';
+    setLocalUser(testUser);
   }, []);
   return (
     <div>
