@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 function Profile({ history }) {
   const [localUser, setLocalUser] = useState('');
@@ -10,6 +11,10 @@ function Profile({ history }) {
   }, []);
   return (
     <div>
+      <Header
+        headerTitle="Profile"
+        noSearch
+      />
       <h2 data-testid="profile-email">
         {localUser}
       </h2>

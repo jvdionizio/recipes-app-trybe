@@ -1,9 +1,10 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function Explore() {
   return (
     <div>
-      Explore
+      <Header headerTitle="Explore" noSearch />
     </div>
   );
 }
