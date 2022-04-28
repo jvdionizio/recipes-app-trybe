@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useContext, useState } from 'react';
+import context from '../context/Context';
 
-function SearchBar() {
+function SearchBar({ headerTitle }) {
   const [searchInput, setSearchInput] = useState('');
   const [typeInput, setTypeInput] = useState('');
 
+  const { handleClickFood, handleClickCockTail } = useContext(context);
   return (
     <div>
       <form>
@@ -51,7 +54,9 @@ function SearchBar() {
         <button
           type="button"
           data-testid="exec-search-btn"
-          onClick={ () => console.log(typeInput, searchInput) }
+          onClick={ () => (headerTitle === 'Foods'
+            ? handleClickFood(searchInput, typeInput)
+            : handleClickCockTail(searchInput, typeInput)) }
         >
           Search
         </button>
@@ -60,4 +65,7 @@ function SearchBar() {
   );
 }
 
+SearchBar.propTypes = {
+  headerTitle: PropTypes.string.isRequired,
+};
 export default SearchBar;

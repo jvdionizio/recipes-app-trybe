@@ -36,7 +36,7 @@ function Header({ headerTitle, noSearch, history }) {
       )}
       <div>
         {showSearchBar && (
-          <SearchBar />
+          <SearchBar headerTitle={ headerTitle } />
         )}
       </div>
 
