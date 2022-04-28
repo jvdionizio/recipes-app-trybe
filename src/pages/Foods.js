@@ -9,10 +9,10 @@ function Foods({ history }) {
   const DOZE = 12;
 
   if (FoodReturns === null) {
-    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    return global.alert('Sorry, we haven\'t found any recipes for these filters.');
   }
   if (FoodReturns.length === 1 && FoodReturns !== null) {
-    history.push(`foods/${FoodReturns[0].idMeal}`);
+    history.push(`/foods/${FoodReturns[0].idMeal}`);
   }
   // if (FoodReturns.length > DOZE) {
   //   FoodReturns.filter((el) => el )
