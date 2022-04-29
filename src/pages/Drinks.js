@@ -1,11 +1,27 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
+import { getDrinks } from '../helpers/TheCockTailDBAPI';
 
 function Drinks({ history }) {
-  const { DrinkReturns } = useContext(Context);
+  const [renderRecipes, setRenderRecipes] = useState([]);
+  const { DrinkReturns, allRecipes, setAllRecipes } = useContext(Context);
+
+  const fetchAllRecipes = async () => {
+    const recipes = await getDrinks();
+    setRenderRecipes(recipes);
+  };
+
+  useEffect(() => {
+    fetchAllRecipes();
+  }, []);
+
+  useEffect(() => {
+    setAllRecipes(renderRecipes);
+  });
+
   const ONZE = 11;
 
   if (DrinkReturns === null) {
@@ -21,6 +37,19 @@ function Drinks({ history }) {
   return (
     <div>
       <Header headerTitle="Drinks" history={ history } />
+      { allRecipes.filter((recipe, index) => index <= ONZE)
+        .map((recipe, index) => (
+          <div data-testid={ `${index}-recipe-card` } key={ index }>
+            <img
+              src={ recipe.strDrinkThumb }
+              data-testid={ `${index}-card-img` }
+              alt="foto-bebida"
+            />
+            <p data-testid={ `${index}-card-name` }>
+              {recipe.strDrink}
+            </p>
+          </div>
+        ))}
       { DrinkReturns !== null && DrinkReturns.filter((el, index) => index <= ONZE)
         .map((el, index) => (
           <div data-testid={ `${index}-recipe-card` } key={ index }>
@@ -40,7 +69,7 @@ function Drinks({ history }) {
 }
 
 Drinks.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Drinks;

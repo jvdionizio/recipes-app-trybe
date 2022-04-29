@@ -1,11 +1,27 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
+import { getRecipes } from '../helpers/TheMealDBAPI';
 
 function Foods({ history }) {
-  const { FoodReturns } = useContext(Context);
+  const [renderRecipes, setRenderRecipes] = useState([]);
+  const { FoodReturns, allRecipes, setAllRecipes } = useContext(Context);
+
+  const fetchAllRecipes = async () => {
+    const recipes = await getRecipes();
+    setRenderRecipes(recipes);
+  };
+
+  useEffect(() => {
+    fetchAllRecipes();
+  }, []);
+
+  useEffect(() => {
+    setAllRecipes(renderRecipes);
+  });
+
   const DOZE = 12;
 
   if (FoodReturns === null) {
@@ -21,16 +37,29 @@ function Foods({ history }) {
   return (
     <div>
       <Header headerTitle="Foods" history={ history } />
-      { FoodReturns !== null && FoodReturns.filter((el, index) => index <= DOZE)
-        .map((el, index) => (
+      { allRecipes.filter((recipe, index) => index < DOZE)
+        .map((recipe, index) => (
           <div data-testid={ `${index}-recipe-card` } key={ index }>
             <img
-              src={ el.strMealThumb }
+              src={ recipe.strMealThumb }
+              data-testid={ `${index}-card-img` }
+              alt="foto-bebida"
+            />
+            <p data-testid={ `${index}-card-name` }>
+              {recipe.strMeal}
+            </p>
+          </div>
+        ))}
+      { FoodReturns !== null && FoodReturns.filter((recipe, index) => index <= DOZE)
+        .map((recipe, index) => (
+          <div data-testid={ `${index}-recipe-card` } key={ index }>
+            <img
+              src={ recipe.strMealThumb }
               data-testid={ `${index}-card-img` }
               alt="foto-comida"
             />
             <p data-testid={ `${index}-card-name` }>
-              {el.strMeal}
+              {recipe.strMeal}
             </p>
           </div>
         ))}
@@ -40,7 +69,7 @@ function Foods({ history }) {
 }
 
 Foods.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Foods;
