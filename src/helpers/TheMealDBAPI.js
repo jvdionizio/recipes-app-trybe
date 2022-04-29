@@ -67,3 +67,11 @@ export const getRandomMeal = async () => {
   console.log(results);
   return results;
 };
+
+export const getByIngredientsList = async () => {
+  const urlIngredients = 'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+  const response = await fetch(urlIngredients);
+  const data = await response.json();
+  const results = data.meals;
+  return results;
+};
