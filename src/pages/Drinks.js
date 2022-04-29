@@ -3,15 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
-import { getDrinks } from '../helpers/TheCockTailDBAPI';
+import { getDrinks, getDrinkCategories } from '../helpers/TheCockTailDBAPI';
 
 function Drinks({ history }) {
   const [renderRecipes, setRenderRecipes] = useState([]);
+  const [renderCategories, setRenderCategories] = useState([]);
   const { DrinkReturns, allRecipes, setAllRecipes } = useContext(Context);
 
   const fetchAllRecipes = async () => {
     const recipes = await getDrinks();
+    const categories = await getDrinkCategories();
     setRenderRecipes(recipes);
+    setRenderCategories(categories);
   };
 
   useEffect(() => {
@@ -23,6 +26,7 @@ function Drinks({ history }) {
   });
 
   const ONZE = 11;
+  const CINCO = 5;
 
   if (DrinkReturns === null) {
     return global.alert('Sorry, we haven\'t found any recipes for these filters.');
@@ -37,6 +41,19 @@ function Drinks({ history }) {
   return (
     <div>
       <Header headerTitle="Drinks" history={ history } />
+      <div>
+        <button type="button">All</button>
+        { renderCategories.filter((category, index) => index < CINCO)
+          .map((category) => (
+            <button
+              key={ category.strCategory }
+              type="button"
+              data-testid={ `${category.strCategory}-category-filter` }
+            >
+              { category.strCategory }
+            </button>
+          )) }
+      </div>
       { allRecipes.filter((recipe, index) => index <= ONZE)
         .map((recipe, index) => (
           <div data-testid={ `${index}-recipe-card` } key={ index }>
