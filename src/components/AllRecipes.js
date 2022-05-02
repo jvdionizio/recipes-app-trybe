@@ -6,7 +6,6 @@ import { getDrinks } from '../helpers/TheCockTailDBAPI';
 
 function AllRecipes({ headerTitle }) {
   const { allRecipes, setAllRecipes } = useContext(Context);
-  console.log(allRecipes);
 
   const fetchAllRecipes = async () => {
     const recipes = headerTitle === 'Foods'

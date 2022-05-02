@@ -12,8 +12,6 @@ function Foods({ history }) {
   const [foodReturnsByCategory, setFoodReturnsByCategory] = useState([]);
   const { FoodReturns } = useContext(Context);
 
-  console.log(setRenderCategories);
-
   const CINCO = 5;
 
   // if (FoodReturns.length > DOZE) {
@@ -23,6 +21,7 @@ function Foods({ history }) {
   const handleCategoryButton = async (target) => {
     const foodByCategory = await getMealByCategories(target.value);
     setFoodReturnsByCategory(foodByCategory);
+    console.log(setRenderCategories);
   };
 
   console.log(foodReturnsByCategory);
@@ -44,7 +43,7 @@ function Foods({ history }) {
             </button>
           )) }
       </div>
-      { FoodReturns.length > 1
+      { FoodReturns === null || FoodReturns.length > 0
         ? <SearchRecipes headerTitle="Foods" /> : <AllRecipes headerTitle="Foods" /> }
       <Footer />
     </div>
