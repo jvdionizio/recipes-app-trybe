@@ -53,6 +53,12 @@ function ExploreFoodsNat() {
         data-testid="explore-by-nationality-dropdown"
         onChange={ (event) => handleNationality(event) }
       >
+        <option
+          data-testid="All-option"
+          value="All"
+        >
+          All
+        </option>
         {
           foodsNat.map((nat, index) => (
             <option
