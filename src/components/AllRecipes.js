@@ -10,20 +10,12 @@ function AllRecipes({ headerTitle }) {
   const fetchAllRecipes = async () => {
     const recipes = headerTitle === 'Foods'
       ? await getRecipes() : await getDrinks();
-    /* const newRecipes = recipes.map((recipe) => {
-      const recipeObj = {
-        name: headerTitle === 'Foods' ? recipe.strMeal : recipe.strDrink,
-        img: headerTitle === 'Foods' ? recipe.strMealThumb : recipe.strDrinkThumb,
-        id: headerTitle === 'Foods' ? recipe.idMeal : recipe.idDrink,
-      };
-      return recipeObj;
-    });
-    console.log(newRecipes); */
     setAllRecipes(recipes);
   };
 
   useEffect(() => {
     fetchAllRecipes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const DOZE = 12;

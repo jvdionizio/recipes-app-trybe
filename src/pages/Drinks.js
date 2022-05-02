@@ -55,7 +55,7 @@ function Drinks({ history }) {
             </button>
           )) }
       </div>
-      { DrinkReturns.length > 1
+      { DrinkReturns === null || DrinkReturns.length > 0
         ? <SearchRecipes headerTitle="Drinks" /> : <AllRecipes headerTitle="Drinks" />}
       <Footer />
     </div>
