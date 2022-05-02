@@ -8,6 +8,7 @@ function Provider({ children }) {
   const [FoodReturns, setFoodReturns] = useState([]);
   const [DrinkReturns, setDrinkReturns] = useState([]);
   const [allRecipes, setAllRecipes] = useState([]);
+  const [categoryRecipes, setCategoryRecipes] = useState([]);
 
   const handleClickFood = async (input, radio) => {
     if (radio === 'ingredients') {
@@ -47,7 +48,9 @@ function Provider({ children }) {
         FoodReturns,
         DrinkReturns,
         allRecipes,
-        setAllRecipes } }
+        setAllRecipes,
+        categoryRecipes,
+        setCategoryRecipes } }
     >
       {children}
     </Context.Provider>

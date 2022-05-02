@@ -1,48 +1,22 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
 import AllRecipes from '../components/AllRecipes';
 import Context from '../context/Context';
-import { getMealByCategories } from '../helpers/TheMealDBAPI';
 import SearchRecipes from '../components/SearchRecipes';
+import Categories from '../components/Categories';
+import RenderRecipesByCategory from '../components/RenderRecipesByCategory';
 
 function Foods({ history }) {
-  const [renderCategories, setRenderCategories] = useState([]);
-  const [foodReturnsByCategory, setFoodReturnsByCategory] = useState([]);
-  const { FoodReturns } = useContext(Context);
+  const { FoodReturns, categoryRecipes } = useContext(Context);
+  console.log(categoryRecipes);
 
-  const CINCO = 5;
-
-  // if (FoodReturns.length > DOZE) {
-  //   FoodReturns.filter((el) => el )
-  // }
-
-  const handleCategoryButton = async (target) => {
-    const foodByCategory = await getMealByCategories(target.value);
-    setFoodReturnsByCategory(foodByCategory);
-    console.log(setRenderCategories);
-  };
-
-  console.log(foodReturnsByCategory);
   return (
     <div>
       <Header headerTitle="Foods" history={ history } />
-      <div>
-        <button type="button">All</button>
-        { renderCategories.filter((category, index) => index < CINCO)
-          .map((category) => (
-            <button
-              key={ category.strCategory }
-              value={ category.strCategory }
-              type="button"
-              data-testid={ `${category.strCategory}-category-filter` }
-              onClick={ ({ target }) => handleCategoryButton(target) }
-            >
-              { category.strCategory }
-            </button>
-          )) }
-      </div>
+      <Categories headerTitle="Foods" />
+      <RenderRecipesByCategory headerTitle="Foods" />
       { FoodReturns === null || FoodReturns.length > 0
         ? <SearchRecipes headerTitle="Foods" /> : <AllRecipes headerTitle="Foods" /> }
       <Footer />
