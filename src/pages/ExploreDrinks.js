@@ -22,6 +22,13 @@ function ExploreDrinks({ history }) {
       </button>
       <button
         type="button"
+        data-testid="explore-by-nationality"
+        onClick={ () => history.push('/explore/drinks/nationalities') }
+      >
+        By Nationality
+      </button>
+      <button
+        type="button"
         data-testid="explore-surprise"
         onClick={ () => getSurpriseDrink() }
       >
