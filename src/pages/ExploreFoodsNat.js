@@ -33,8 +33,10 @@ function ExploreFoodsNat() {
 
   const handleNationality = async (event) => {
     const national = event.target.value;
-    const response = await getNationalitiesRecipes(national);
-    console.log(response);
+    const response = national === 'All'
+      ? await getRecipes()
+      : await getNationalitiesRecipes(national);
+    // console.log(response);
     const response12 = response.slice(0, DOZE).map((ingr) => {
       const obj = {
         id: ingr.idMeal,
@@ -53,6 +55,12 @@ function ExploreFoodsNat() {
         data-testid="explore-by-nationality-dropdown"
         onChange={ (event) => handleNationality(event) }
       >
+        <option
+          data-testid="All-option"
+          value="All"
+        >
+          All
+        </option>
         {
           foodsNat.map((nat, index) => (
             <option
