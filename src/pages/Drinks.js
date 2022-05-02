@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
+import AllRecipes from '../components/AllRecipes';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
+import SearchRecipes from '../components/SearchRecipes';
 import Context from '../context/Context';
 import { getDrinks, getDrinkCategories } from '../helpers/TheCockTailDBAPI';
 
 function Drinks({ history }) {
   const [renderRecipes, setRenderRecipes] = useState([]);
   const [renderCategories, setRenderCategories] = useState([]);
-  const { DrinkReturns, allRecipes, setAllRecipes } = useContext(Context);
+  const { DrinkReturns, setAllRecipes } = useContext(Context);
 
   const fetchAllRecipes = async () => {
     const recipes = await getDrinks();
@@ -25,7 +27,6 @@ function Drinks({ history }) {
     setAllRecipes(renderRecipes);
   });
 
-  const ONZE = 11;
   const CINCO = 5;
 
   if (DrinkReturns === null) {
@@ -54,32 +55,8 @@ function Drinks({ history }) {
             </button>
           )) }
       </div>
-      { allRecipes.filter((recipe, index) => index <= ONZE)
-        .map((recipe, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
-            <img
-              src={ recipe.strDrinkThumb }
-              data-testid={ `${index}-card-img` }
-              alt="foto-bebida"
-            />
-            <p data-testid={ `${index}-card-name` }>
-              {recipe.strDrink}
-            </p>
-          </div>
-        ))}
-      { DrinkReturns !== null && DrinkReturns.filter((el, index) => index <= ONZE)
-        .map((el, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
-            <img
-              src={ el.strDrinkThumb }
-              data-testid={ `${index}-card-img` }
-              alt="foto-bebida"
-            />
-            <p data-testid={ `${index}-card-name` }>
-              {el.strDrink}
-            </p>
-          </div>
-        ))}
+      { DrinkReturns.length > 1
+        ? <SearchRecipes headerTitle="Drinks" /> : <AllRecipes headerTitle="Drinks" />}
       <Footer />
     </div>
   );

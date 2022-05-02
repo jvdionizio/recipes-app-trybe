@@ -1,43 +1,31 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
+import AllRecipes from '../components/AllRecipes';
 import Context from '../context/Context';
-import { getRecipes, getMealCategories } from '../helpers/TheMealDBAPI';
+import { getMealByCategories } from '../helpers/TheMealDBAPI';
+import SearchRecipes from '../components/SearchRecipes';
 
 function Foods({ history }) {
-  const [renderRecipes, setRenderRecipes] = useState([]);
   const [renderCategories, setRenderCategories] = useState([]);
-  const { FoodReturns, allRecipes, setAllRecipes } = useContext(Context);
+  const [foodReturnsByCategory, setFoodReturnsByCategory] = useState([]);
+  const { FoodReturns } = useContext(Context);
 
-  const fetchAllRecipes = async () => {
-    const recipes = await getRecipes();
-    const categories = await getMealCategories();
-    setRenderRecipes(recipes);
-    setRenderCategories(categories);
-  };
+  console.log(setRenderCategories);
 
-  useEffect(() => {
-    fetchAllRecipes();
-  }, []);
-
-  useEffect(() => {
-    setAllRecipes(renderRecipes);
-  });
-
-  const DOZE = 12;
   const CINCO = 5;
 
-  if (FoodReturns === null) {
-    return global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  }
-  if (FoodReturns.length === 1 && FoodReturns !== null) {
-    history.push(`/foods/${FoodReturns[0].idMeal}`);
-  }
   // if (FoodReturns.length > DOZE) {
   //   FoodReturns.filter((el) => el )
   // }
-  console.log(renderCategories);
+
+  const handleCategoryButton = async (target) => {
+    const foodByCategory = await getMealByCategories(target.value);
+    setFoodReturnsByCategory(foodByCategory);
+  };
+
+  console.log(foodReturnsByCategory);
   return (
     <div>
       <Header headerTitle="Foods" history={ history } />
@@ -47,39 +35,17 @@ function Foods({ history }) {
           .map((category) => (
             <button
               key={ category.strCategory }
+              value={ category.strCategory }
               type="button"
               data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ ({ target }) => handleCategoryButton(target) }
             >
               { category.strCategory }
             </button>
           )) }
       </div>
-      { allRecipes.filter((recipe, index) => index < DOZE)
-        .map((recipe, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
-            <img
-              src={ recipe.strMealThumb }
-              data-testid={ `${index}-card-img` }
-              alt="foto-bebida"
-            />
-            <p data-testid={ `${index}-card-name` }>
-              {recipe.strMeal}
-            </p>
-          </div>
-        ))}
-      { FoodReturns !== null && FoodReturns.filter((recipe, index) => index <= DOZE)
-        .map((recipe, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
-            <img
-              src={ recipe.strMealThumb }
-              data-testid={ `${index}-card-img` }
-              alt="foto-comida"
-            />
-            <p data-testid={ `${index}-card-name` }>
-              {recipe.strMeal}
-            </p>
-          </div>
-        ))}
+      { FoodReturns.length > 1
+        ? <SearchRecipes headerTitle="Foods" /> : <AllRecipes headerTitle="Foods" /> }
       <Footer />
     </div>
   );
