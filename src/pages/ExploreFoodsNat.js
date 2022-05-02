@@ -34,7 +34,7 @@ function ExploreFoodsNat() {
   const handleNationality = async (event) => {
     const national = event.target.value;
     const response = await getNationalitiesRecipes(national);
-    console.log(response);
+    // console.log(response);
     const response12 = response.slice(0, DOZE).map((ingr) => {
       const obj = {
         id: ingr.idMeal,
