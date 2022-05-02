@@ -9,7 +9,7 @@ function ExploreFoodsNat() {
   const DOZE = 12;
   const [foodsNat, setFoodsNat] = useState([]);
   const [foodToRender, setfoodToRender] = useState([]);
-  console.log(foodToRender);
+  // console.log(foodToRender);
 
   useEffect(() => {
     const getNationalities = async () => {
