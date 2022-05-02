@@ -5,7 +5,6 @@ import { getByIngredientsList } from '../helpers/TheMealDBAPI';
 
 function ExploreFoodsIng() {
   const [foodsIng, setFoodsIng] = useState([]);
-  console.log(foodsIng);
   const DOZE = 12;
   useEffect(() => {
     const getIngredients = async () => {
@@ -17,9 +16,7 @@ function ExploreFoodsIng() {
         };
         return obj;
       });
-      console.log('todos os ingredientes', response12);
       setFoodsIng(response12);
-
       return response.slice(0, DOZE);
     };
     getIngredients();
@@ -29,15 +26,12 @@ function ExploreFoodsIng() {
     <div>
       <Header headerTitle="Explore Ingredients" noSearch />
       {
-        foodsIng.map(({ name, image }, index) => {
-          console.log(name, image);
-          return (
-            <div key={ index } data-testid={ `${index}-ingredient-card` }>
-              <img src={ image } alt={ name } data-testid={ `${index}-card-img` } />
-              <p data-testid={ `${index}-card-name` }>{ name }</p>
-            </div>
-          );
-        })
+        foodsIng.map(({ name, image }, index) => (
+          <div key={ index } data-testid={ `${index}-ingredient-card` }>
+            <img src={ image } alt={ name } data-testid={ `${index}-card-img` } />
+            <p data-testid={ `${index}-card-name` }>{ name }</p>
+          </div>
+        ))
       }
       <Footer />
     </div>

@@ -75,3 +75,20 @@ export const getByIngredientsList = async () => {
   const results = data.meals;
   return results;
 };
+
+export const getNationalitiesList = async () => {
+  const urlIngredients = 'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
+  const response = await fetch(urlIngredients);
+  const data = await response.json();
+  const results = data.meals;
+  return results;
+};
+
+export const getNationalitiesRecipes = async (national) => {
+  const urlIngredients = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${national}`;
+  const response = await fetch(urlIngredients);
+  const data = await response.json();
+  const results = data.meals;
+  console.log(results);
+  return results;
+};
