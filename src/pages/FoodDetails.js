@@ -1,34 +1,26 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-// import { getMealById } from '../helpers/TheMealDBAPI';
+import React, { useEffect, useState } from 'react';
+import HeaderRecipes from '../components/HeaderRecipes';
+import { getMealById } from '../helpers/TheMealDBAPI';
 
-function FoodDetails() {
-  // const [foodDetails, setFoodDetails] = useState({});
+function FoodDetails(props) {
+  const [foodDetails, setFoodDetails] = useState();
 
-  // useEffect(() => {
-  //   const { match: { params: { id } } } = props;
-  //   const getFood = async () => { // pegando os dados na API
-  //     const response = await getMealById(id); // dados totais
-  //     setFoodDetails(response);
-  //     return response;
-  //   };
-  //   getFood();
-  // }, [props]);
+  const getFood = async () => { // pegando os dados na API
+    const { match: { params: { id } } } = props;
+    const response = await getMealById(id); // dados totais
+    setFoodDetails(response);
+    return response;
+  };
 
-  // useEffect(() => {
-  // const { match: { params: { id } } } = props;
-  // const getFood = async () => { // pegando os dados na API
-  //   const response = await getMealById(id); // dados totais
-  //   // setFoodDetails(response);
-  //   console.log(response);
-  //   return response;
-  // };
-  // getFood();
-  // }, [props]);
+  useEffect(() => {
+    getFood();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
-      {/* { foodDetails[0].idMeal} */}
+      {foodDetails && <HeaderRecipes foodDetails={ foodDetails } />}
     </div>
   );
 }

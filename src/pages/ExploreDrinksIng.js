@@ -1,10 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
+import React, { useContext, useEffect, useState } from 'react';
 import Footer from '../components/Footer/Footer';
+import Header from '../components/Header';
 import Context from '../context/Context';
-import { getByIngredientsListDrink,
-  getByIngredientsDrink } from '../helpers/TheCockTailDBAPI';
+import {
+  getByIngredientsDrink,
+  // eslint-disable-next-line comma-dangle
+  getByIngredientsListDrink
+} from '../helpers/TheCockTailDBAPI';
 
 function ExploreDrinksIng({ history }) {
   const [foodsIng, setFoodsIng] = useState([]);
