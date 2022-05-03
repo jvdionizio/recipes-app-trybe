@@ -39,15 +39,18 @@ function ExploreFoodsIng({ history }) {
       <Header headerTitle="Explore Ingredients" noSearch />
       {
         foodsIng.map(({ name, image }, index) => (
-          <button
+          <div
             key={ index }
             type="button"
             data-testid={ `${index}-ingredient-card` }
             onClick={ () => handleClick(name) }
+            onKeyDown={ () => handleClick(name) }
+            role="button"
+            tabIndex="0"
           >
             <img src={ image } alt={ name } data-testid={ `${index}-card-img` } />
             <p data-testid={ `${index}-card-name` }>{ name }</p>
-          </button>
+          </div>
         ))
       }
       <Footer />
