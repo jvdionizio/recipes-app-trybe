@@ -55,7 +55,7 @@ function Provider({ children }) {
         categorySelected,
         setCategorySelected,
         setFoodReturns,
-        setDrinkReturns} }
+        setDrinkReturns } }
     >
       {children}
     </Context.Provider>
