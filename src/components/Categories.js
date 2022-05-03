@@ -6,7 +6,10 @@ import { getDrinkCategories, getDrinkByCategory } from '../helpers/TheCockTailDB
 
 function Categories({ headerTitle }) {
   const [renderCategories, setRenderCategories] = useState([]);
-  const { setCategoryRecipes } = useContext(Context);
+  const {
+    setCategoryRecipes,
+    setCategorySelected,
+    categorySelected } = useContext(Context);
   const CINCO = 5;
 
   const fetchCategories = async () => {
@@ -21,15 +24,20 @@ function Categories({ headerTitle }) {
   }, []);
 
   const handleCategoryButton = async (target) => {
-    console.log(target.value);
+    if (categorySelected === target.value) {
+      return setCategoryRecipes([]);
+    }
     const categories = headerTitle === 'Foods'
       ? await getMealByCategories(target.value) : await getDrinkByCategory(target.value);
+    setCategorySelected(target.value);
     setCategoryRecipes(categories);
   };
 
   const handleAll = () => {
     setCategoryRecipes([]);
   };
+
+  console.log(categorySelected);
 
   return (
     <div>
