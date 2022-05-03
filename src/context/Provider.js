@@ -40,7 +40,12 @@ function Provider({ children }) {
   };
   return (
     <Context.Provider
-      value={ { handleClickFood, handleClickCockTail, FoodReturns, DrinkReturns } }
+      value={ { handleClickFood,
+        handleClickCockTail,
+        FoodReturns,
+        DrinkReturns,
+        setFoodReturns,
+        setDrinkReturns } }
     >
       {children}
     </Context.Provider>

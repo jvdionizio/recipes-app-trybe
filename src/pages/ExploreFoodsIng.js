@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer/Footer';
-import { getByIngredientsList } from '../helpers/TheMealDBAPI';
+import { getByIngredients, getByIngredientsList } from '../helpers/TheMealDBAPI';
+import Context from '../context/Context';
 // import { Link } from 'react-router-dom';
 
-function ExploreFoodsIng() {
+function ExploreFoodsIng({ history }) {
   const [foodsIng, setFoodsIng] = useState([]);
+  const { setFoodReturns } = useContext(Context);
   const DOZE = 12;
   useEffect(() => {
     const getIngredients = async () => {
@@ -23,8 +26,12 @@ function ExploreFoodsIng() {
     getIngredients();
   }, []);
 
-  const handleClick = (name) => {
+  const handleClick = async (name) => {
     console.log('handrle click ingedients foods', name);
+    const response = await getByIngredients(name);
+    console.log(response);
+    setFoodReturns(response);
+    history.push('/foods');
   };
 
   return (
@@ -47,5 +54,9 @@ function ExploreFoodsIng() {
     </div>
   );
 }
+
+ExploreFoodsIng.propTypes = {
+  history: PropTypes.func.isRequired,
+};
 
 export default ExploreFoodsIng;
