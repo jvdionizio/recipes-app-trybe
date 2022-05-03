@@ -53,7 +53,9 @@ function Provider({ children }) {
         categoryRecipes,
         setCategoryRecipes,
         categorySelected,
-        setCategorySelected } }
+        setCategorySelected,
+        setFoodReturns,
+        setDrinkReturns} }
     >
       {children}
     </Context.Provider>
