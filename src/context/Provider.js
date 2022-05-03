@@ -10,6 +10,7 @@ function Provider({ children }) {
   const [allRecipes, setAllRecipes] = useState([]);
   const [categoryRecipes, setCategoryRecipes] = useState([]);
   const [categorySelected, setCategorySelected] = useState('');
+  // const [favoritesRecipes, setFavoritesRecipes] = useState([]);
 
   const handleClickFood = async (input, radio) => {
     if (radio === 'ingredients') {
