@@ -1,46 +1,31 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
+import AllRecipes from '../components/AllRecipes';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header';
+import Categories from '../components/Categories';
+import SearchRecipes from '../components/SearchRecipes';
 import Context from '../context/Context';
+import RenderRecipesByCategory from '../components/RenderRecipesByCategory';
 
 function Drinks({ history }) {
   const { DrinkReturns } = useContext(Context);
-  const ONZE = 11;
-
-  if (DrinkReturns === null) {
-    return global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  }
-  if (DrinkReturns.length === 1 && DrinkReturns !== null) {
-    history.push(`/drinks/${DrinkReturns[0].idDrink}`);
-  }
-  // if (FoodReturns.length > DOZE) {
-  //   FoodReturns.filter((el) => el )
-  // }
 
   return (
     <div>
       <Header headerTitle="Drinks" history={ history } />
-      { DrinkReturns !== null && DrinkReturns.filter((el, index) => index <= ONZE)
-        .map((el, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
-            <img
-              src={ el.strDrinkThumb }
-              data-testid={ `${index}-card-img` }
-              alt="foto-bebida"
-            />
-            <p data-testid={ `${index}-card-name` }>
-              {el.strDrink}
-            </p>
-          </div>
-        ))}
+      <Categories headerTitle="Drinks" />
+      <RenderRecipesByCategory headerTitle="Drinks" history={ history } />
+      { DrinkReturns === null || DrinkReturns.length > 0
+        ? <SearchRecipes headerTitle="Drinks" history={ history } />
+        : <AllRecipes headerTitle="Drinks" history={ history } />}
       <Footer />
     </div>
   );
 }
 
 Drinks.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Drinks;

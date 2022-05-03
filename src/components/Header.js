@@ -45,7 +45,7 @@ function Header({ headerTitle, noSearch, history }) {
 }
 
 Header.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
   headerTitle: PropTypes.string.isRequired,
   noSearch: PropTypes.bool.isRequired,
 };

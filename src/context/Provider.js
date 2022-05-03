@@ -7,6 +7,9 @@ import Context from './Context';
 function Provider({ children }) {
   const [FoodReturns, setFoodReturns] = useState([]);
   const [DrinkReturns, setDrinkReturns] = useState([]);
+  const [allRecipes, setAllRecipes] = useState([]);
+  const [categoryRecipes, setCategoryRecipes] = useState([]);
+  const [categorySelected, setCategorySelected] = useState('');
 
   const handleClickFood = async (input, radio) => {
     if (radio === 'ingredients') {
@@ -40,12 +43,19 @@ function Provider({ children }) {
   };
   return (
     <Context.Provider
-      value={ { handleClickFood,
+      value={ {
+        handleClickFood,
         handleClickCockTail,
         FoodReturns,
         DrinkReturns,
+        allRecipes,
+        setAllRecipes,
+        categoryRecipes,
+        setCategoryRecipes,
+        categorySelected,
+        setCategorySelected,
         setFoodReturns,
-        setDrinkReturns } }
+        setDrinkReturns} }
     >
       {children}
     </Context.Provider>

@@ -68,11 +68,21 @@ export const getRandomDrink = async () => {
   return results;
 };
 
+export const getDrinkByCategory = async (category) => {
+  const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  const results = data.drinks;
+
+  return results;
+};
+
 export const getByIngredientsListDrink = async () => {
   const urlIngredients = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
   const response = await fetch(urlIngredients);
   const data = await response.json();
   const results = data.drinks;
+
   console.log(results);
   return results;
 };
