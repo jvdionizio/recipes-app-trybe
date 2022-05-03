@@ -44,15 +44,18 @@ function ExploreDrinksIng({ history }) {
         foodsIng.map(({ name, image }, index) => {
           console.log(name, image);
           return (
-            <button
+            <div
               type="button"
               key={ index }
               data-testid={ `${index}-ingredient-card` }
               onClick={ () => handleClick(name) }
+              onKeyDown={ () => handleClick(name) }
+              role="button"
+              tabIndex="0"
             >
               <img src={ image } alt={ name } data-testid={ `${index}-card-img` } />
               <p data-testid={ `${index}-card-name` }>{ name }</p>
-            </button>
+            </div>
           );
         })
       }
