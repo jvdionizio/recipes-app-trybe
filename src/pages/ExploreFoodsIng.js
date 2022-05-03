@@ -25,8 +25,6 @@ function ExploreFoodsIng() {
 
   const handleClick = (name) => {
     console.log('handrle click ingedients foods', name);
-    const response = 'response';
-    console.log(response);
   };
 
   return (
