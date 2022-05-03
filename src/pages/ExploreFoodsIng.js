@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer/Footer';
 import { getByIngredientsList } from '../helpers/TheMealDBAPI';
+// import { Link } from 'react-router-dom';
 
 function ExploreFoodsIng() {
   const [foodsIng, setFoodsIng] = useState([]);
@@ -22,15 +23,24 @@ function ExploreFoodsIng() {
     getIngredients();
   }, []);
 
+  const handleClick = (name) => {
+    console.log('handrle click ingedients foods', name);
+  };
+
   return (
     <div>
       <Header headerTitle="Explore Ingredients" noSearch />
       {
         foodsIng.map(({ name, image }, index) => (
-          <div key={ index } data-testid={ `${index}-ingredient-card` }>
+          <button
+            key={ index }
+            type="button"
+            data-testid={ `${index}-ingredient-card` }
+            onClick={ () => handleClick(name) }
+          >
             <img src={ image } alt={ name } data-testid={ `${index}-card-img` } />
             <p data-testid={ `${index}-card-name` }>{ name }</p>
-          </div>
+          </button>
         ))
       }
       <Footer />
