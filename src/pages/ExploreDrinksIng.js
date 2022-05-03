@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer/Footer';
-import { getByIngredientsListDrink } from '../helpers/TheCockTailDBAPI';
+import Context from '../context/Context';
+import { getByIngredientsListDrink,
+  getByIngredientsDrink } from '../helpers/TheCockTailDBAPI';
 
-function ExploreDrinksing() {
+function ExploreDrinksIng({ history }) {
   const [foodsIng, setFoodsIng] = useState([]);
+  const { setDrinkReturns } = useContext(Context);
   console.log(foodsIng);
   const DOZE = 12;
   useEffect(() => {
@@ -24,6 +28,15 @@ function ExploreDrinksing() {
     };
     getIngredients();
   }, []);
+
+  const handleClick = async (name) => {
+    console.log('handrle click ingedients foods', name);
+    const response = await getByIngredientsDrink(name);
+    console.log(response);
+    setDrinkReturns(response);
+    history.push('/drinks');
+  };
+
   return (
     <div>
       <Header headerTitle="Explore Ingredients" noSearch />
@@ -31,10 +44,15 @@ function ExploreDrinksing() {
         foodsIng.map(({ name, image }, index) => {
           console.log(name, image);
           return (
-            <div key={ index } data-testid={ `${index}-ingredient-card` }>
+            <button
+              type="button"
+              key={ index }
+              data-testid={ `${index}-ingredient-card` }
+              onClick={ () => handleClick(name) }
+            >
               <img src={ image } alt={ name } data-testid={ `${index}-card-img` } />
               <p data-testid={ `${index}-card-name` }>{ name }</p>
-            </div>
+            </button>
           );
         })
       }
@@ -43,4 +61,8 @@ function ExploreDrinksing() {
   );
 }
 
-export default ExploreDrinksing;
+ExploreDrinksIng.propTypes = {
+  history: PropTypes.func.isRequired,
+};
+
+export default ExploreDrinksIng;
