@@ -4,7 +4,7 @@ import Context from '../context/Context';
 import { getRecipes } from '../helpers/TheMealDBAPI';
 import { getDrinks } from '../helpers/TheCockTailDBAPI';
 
-function AllRecipes({ headerTitle }) {
+function AllRecipes({ headerTitle, history }) {
   const { allRecipes, setAllRecipes } = useContext(Context);
 
   const fetchAllRecipes = async () => {
@@ -20,11 +20,25 @@ function AllRecipes({ headerTitle }) {
 
   const DOZE = 12;
 
+  const redirectDetails = (recipe) => {
+    const sendToDetails = headerTitle === 'Foods'
+      ? history.push(`/foods/${recipe.idMeal}`)
+      : history.push(`/drinks/${recipe.idDrink}`);
+    return sendToDetails;
+  };
+
   return (
     <div>
       { allRecipes.slice(0, DOZE)
         .map((recipe, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
+          <div
+            data-testid={ `${index}-recipe-card` }
+            key={ index }
+            onClick={ () => redirectDetails(recipe) }
+            onKeyDown={ () => redirectDetails(recipe) }
+            role="button"
+            tabIndex="0"
+          >
             <img
               src={ headerTitle === 'Foods' ? recipe.strMealThumb : recipe.strDrinkThumb }
               data-testid={ `${index}-card-img` }

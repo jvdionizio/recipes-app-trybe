@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Context from '../context/Context';
 
-function SearchRecipes({ headerTitle }) {
+function SearchRecipes({ headerTitle, history }) {
   const { FoodReturns, DrinkReturns } = useContext(Context);
 
   const typeRecipe = headerTitle === 'Foods' ? FoodReturns : DrinkReturns;
@@ -19,11 +19,25 @@ function SearchRecipes({ headerTitle }) {
 
   const DOZE = 12;
 
+  const redirectDetails = (recipe) => {
+    const sendToDetails = headerTitle === 'Foods'
+      ? history.push(`/foods/${recipe.idMeal}`)
+      : history.push(`/drinks/${recipe.idDrink}`);
+    return sendToDetails;
+  };
+
   return (
     <div>
       { typeRecipe.slice(0, DOZE)
         .map((recipe, index) => (
-          <div data-testid={ `${index}-recipe-card` } key={ index }>
+          <div
+            data-testid={ `${index}-recipe-card` }
+            key={ index }
+            onClick={ () => redirectDetails(recipe) }
+            onKeyDown={ () => redirectDetails(recipe) }
+            role="button"
+            tabIndex="0"
+          >
             <img
               src={ headerTitle === 'Foods' ? recipe.strMealThumb : recipe.strDrinkThumb }
               data-testid={ `${index}-card-img` }
@@ -40,6 +54,7 @@ function SearchRecipes({ headerTitle }) {
 
 SearchRecipes.propTypes = {
   headerTitle: PropTypes.string.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default SearchRecipes;

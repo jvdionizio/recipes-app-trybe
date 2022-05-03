@@ -15,9 +15,10 @@ function Drinks({ history }) {
     <div>
       <Header headerTitle="Drinks" history={ history } />
       <Categories headerTitle="Drinks" />
-      <RenderRecipesByCategory headerTitle="Drinks" />
+      <RenderRecipesByCategory headerTitle="Drinks" history={ history } />
       { DrinkReturns === null || DrinkReturns.length > 0
-        ? <SearchRecipes headerTitle="Drinks" /> : <AllRecipes headerTitle="Drinks" />}
+        ? <SearchRecipes headerTitle="Drinks" history={ history } />
+        : <AllRecipes headerTitle="Drinks" history={ history } />}
       <Footer />
     </div>
   );

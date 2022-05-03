@@ -41,7 +41,13 @@ function Categories({ headerTitle }) {
 
   return (
     <div>
-      <button type="button" onClick={ () => handleAll() }>All</button>
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => handleAll() }
+      >
+        All
+      </button>
       { renderCategories.filter((category, index) => index < CINCO)
         .map((category) => (
           <button

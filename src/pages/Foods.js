@@ -16,9 +16,10 @@ function Foods({ history }) {
     <div>
       <Header headerTitle="Foods" history={ history } />
       <Categories headerTitle="Foods" />
-      <RenderRecipesByCategory headerTitle="Foods" />
+      <RenderRecipesByCategory headerTitle="Foods" history={ history } />
       { FoodReturns === null || FoodReturns.length > 0
-        ? <SearchRecipes headerTitle="Foods" /> : <AllRecipes headerTitle="Foods" /> }
+        ? <SearchRecipes headerTitle="Foods" history={ history } />
+        : <AllRecipes headerTitle="Foods" history={ history } /> }
       <Footer />
     </div>
   );
