@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import style from './Ingredients.module.css';
+import RenderList from '../RenderList';
 
-function Ingredients({ recipeDetails, type, page }) {
+function Ingredients({ recipeDetails, type, page, history }) {
   const [list, setList] = useState();
+  const [quant, setQuant] = useState(0);
 
   const DEZESSETE = 17;
   const TRINTA_DOIS = 32;
@@ -43,20 +45,15 @@ function Ingredients({ recipeDetails, type, page }) {
 
   const stepDone = (target) => {
     target.nextSibling.classList.toggle(style.done);
+    return target.checked ? setQuant(quant + 1) : setQuant(quant - 1);
   };
-
-  const renderList = () => (
-    list && (
-      <ul className={ style.list }>
-        { list.map((item, index) => (
-          <li key={ index }>{ item }</li>
-        )) }
-      </ul>)
-  );
 
   const renderCheckBox = () => (
     list && list.map((item, index) => (
-      <div key={ index }>
+      <div
+        data-testid={ `${index}-ingredient-step` }
+        key={ index }
+      >
         <input
           type="checkbox"
           name="done"
@@ -71,14 +68,24 @@ function Ingredients({ recipeDetails, type, page }) {
     <div>
       <header>Ingredients</header>
       <section>
-        { page === 'details' ? renderList() : renderCheckBox() }
+        { page === 'details' ? <RenderList list={ list } /> : renderCheckBox() }
       </section>
+      <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ list && list.length !== quant }
+        onClick={ () => history.push('/done-recipes') }
+      >
+        Finalizar Receita
+      </button>
     </div>
   );
 }
 
 Ingredients.propTypes = {
   recipeDetails: PropTypes.objectOf(PropTypes.any),
+  history: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
 export default Ingredients;

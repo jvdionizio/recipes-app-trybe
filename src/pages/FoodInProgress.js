@@ -29,6 +29,7 @@ function FoodInProgress({ history, match }) {
             recipeDetails={ recipeDetails }
             type={ path[1] }
             page="progress"
+            history={ history }
           />
         </div>
       )}
