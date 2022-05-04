@@ -7,8 +7,23 @@ function HeaderRecipes({ foodDetails }) {
   const [recipeDetails, setRecipeDetails] = useState();
   let obj = {};
 
-  const test = foodDetails[0].strDrinks === undefined
+  const test = foodDetails && foodDetails[0].strDrinks === undefined
     ? 'food' : 'drink';
+
+  const funcTest = () => {
+    const { strDrinkThumb, strDrink, strCategory,
+      idDrink, strAlcoholic } = foodDetails[0];
+    obj = {
+      id: idDrink,
+      type: 'drink',
+      nationality: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    };
+  };
+
   const conditional = (testCond) => {
     if (testCond === 'food') {
       const { strMealThumb, strMeal, strCategory, idMeal,
@@ -24,17 +39,7 @@ function HeaderRecipes({ foodDetails }) {
       };
     }
     if (testCond === 'drink') {
-      const { strDrinkThumb, strDrink, strCategory,
-        idDrink, strAlcoholic } = foodDetails[0];
-      obj = {
-        id: idDrink,
-        type: 'drink',
-        nationality: '',
-        category: strCategory,
-        alcoholicOrNot: strAlcoholic,
-        name: strDrink,
-        image: strDrinkThumb,
-      };
+      return foodDetails && funcTest();
     }
   };
 
@@ -46,6 +51,8 @@ function HeaderRecipes({ foodDetails }) {
 
   const handleFavorite = () => console.log(obj);
   // const { name, image, strCategory } = recipeDetails;
+  const cleber = recipeDetails;
+  console.log(cleber);
 
   return (
     <div>

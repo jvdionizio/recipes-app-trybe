@@ -8,7 +8,12 @@ function RenderList({ list }) {
       {list && (
         <ul className={ style.list }>
           { list.map((item, index) => (
-            <li key={ index }>{ item }</li>
+            <li
+              key={ index }
+              data-testid={ `${index}-ingredient-step` }
+            >
+              { item }
+            </li>
           )) }
         </ul>)}
     </div>

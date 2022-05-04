@@ -24,7 +24,7 @@ function FoodInProgress({ history, match }) {
     <div>
       {recipeDetails && (
         <div>
-          <HeaderRecipes foodDetails={ recipeDetails } />
+          <HeaderRecipes recipeDetails={ recipeDetails } />
           <Ingredients
             recipeDetails={ recipeDetails }
             type={ path[1] }
