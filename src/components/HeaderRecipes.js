@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function HeaderRecipes({ foodDetails }) {
   const [recipeDetails, setRecipeDetails] = useState();
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  // const { favoritesRecipes, setFavoritesRecipes } = useContext(Context);
   let obj = {};
   console.log(recipeDetails);
   // console.log(foodDetails);
@@ -46,10 +50,14 @@ function HeaderRecipes({ foodDetails }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(test);
-  const handleFavorite = () => console.log(obj);
-  // const { name, image, strCategory } = recipeDetails;
-
+  const handleClickFavorite = async () => {
+    const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const favorites = getFavorites === null ? [] : getFavorites;
+    favorites.push(recipeDetails);
+    console.log(favorites);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
+    setIsFavorite(!isFavorite);
+  };
   return (
     <div>
       {recipeDetails && (
@@ -77,8 +85,8 @@ function HeaderRecipes({ foodDetails }) {
             data-testid="favorite-btn"
             type="image"
             alt="share"
-            src={ whiteHeartIcon }
-            onClick={ () => handleFavorite() }
+            src={ isFavorite === false ? whiteHeartIcon : blackHeartIcon }
+            onClick={ () => handleClickFavorite() }
           />
           <p
             data-testId="recipe-category"
