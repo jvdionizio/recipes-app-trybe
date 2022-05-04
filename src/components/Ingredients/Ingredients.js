@@ -7,9 +7,8 @@ function Ingredients({ recipeDetails, type, page, history }) {
   const [list, setList] = useState();
   const [quant, setQuant] = useState(0);
 
-  const DEZESSETE = 17;
-  const TRINTA_DOIS = 32;
-  const QUARENTA_SETE = 47;
+  const VINTE_UM = 21;
+  const TRINTA_SEIS = 36;
   const NOVE = 9;
   const VINTE_NOVE = 29;
   const QUARENTA_NOVE = 49;
@@ -22,8 +21,8 @@ function Ingredients({ recipeDetails, type, page, history }) {
       ings = recipeValues.slice(NOVE, VINTE_NOVE);
       measures = recipeValues.slice(VINTE_NOVE, QUARENTA_NOVE);
     } else {
-      ings = recipeValues.slice(DEZESSETE, TRINTA_DOIS);
-      measures = recipeValues.slice(TRINTA_DOIS, QUARENTA_SETE);
+      ings = recipeValues.slice(VINTE_UM, TRINTA_SEIS);
+      measures = recipeValues.slice(TRINTA_SEIS, QUARENTA_NOVE);
     }
   };
 
