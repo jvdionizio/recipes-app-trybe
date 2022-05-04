@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import style from './Ingredients.module.css';
 
-function Ingredients({ recipeDetails, type }) {
+function Ingredients({ recipeDetails, type, page }) {
   const [list, setList] = useState();
 
   const DEZESSETE = 17;
@@ -41,18 +41,37 @@ function Ingredients({ recipeDetails, type }) {
 
   useEffect(() => getIngredientsAndMeasures(), []);
 
-  console.log(list);
+  const stepDone = (target) => {
+    target.nextSibling.classList.toggle(style.done);
+  };
+
+  const renderList = () => (
+    list && (
+      <ul className={ style.list }>
+        { list.map((item, index) => (
+          <li key={ index }>{ item }</li>
+        )) }
+      </ul>)
+  );
+
+  const renderCheckBox = () => (
+    list && list.map((item, index) => (
+      <div key={ index }>
+        <input
+          type="checkbox"
+          name="done"
+          onClick={ ({ target }) => stepDone(target) }
+        />
+        <label htmlFor="done">{ item }</label>
+      </div>
+    ))
+  );
 
   return (
     <div>
       <header>Ingredients</header>
       <section>
-        { list && (
-          <ul className={ style.list }>
-            { list.map((item, index) => (
-              <li key={ index }>{ item }</li>
-            )) }
-          </ul>)}
+        { page === 'details' ? renderList() : renderCheckBox() }
       </section>
     </div>
   );
