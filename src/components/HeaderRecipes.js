@@ -4,9 +4,19 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
+const copy = require('clipboard-copy');
+
 function HeaderRecipes({ foodDetails }) {
   const [recipeDetails, setRecipeDetails] = useState();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const handleShare = () => {
+    console.log('share');
+    console.log(window.location.href);
+    copy(window.location.href);
+    setLinkCopied(true);
+  };
 
   // const { favoritesRecipes, setFavoritesRecipes } = useContext(Context);
   let obj = {};
@@ -80,6 +90,9 @@ function HeaderRecipes({ foodDetails }) {
             type="image"
             alt="share"
             src={ shareIcon }
+            onClick={ () => handleShare() }
+            onKeyDown={ () => handleShare() }
+            tabIndex="0"
           />
           <input
             data-testid="favorite-btn"
@@ -93,6 +106,9 @@ function HeaderRecipes({ foodDetails }) {
           >
             {recipeDetails.strCategory}
           </p>
+          {
+            linkCopied && <p>Link copied!</p>
+          }
         </>)}
     </div>
   );
