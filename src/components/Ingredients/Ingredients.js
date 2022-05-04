@@ -48,7 +48,7 @@ function Ingredients({ recipeDetails, type, page, history }) {
   return (
     <div>
       <header>Ingredients</header>
-      <section id="ingredients-container">
+      <section>
         { page === 'details'
           ? <RenderList list={ list } />
           : (

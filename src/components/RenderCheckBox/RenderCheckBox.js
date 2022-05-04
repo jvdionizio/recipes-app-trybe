@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import style from '../StyleList.module.css';
 
@@ -22,16 +22,21 @@ function RenderCheckBox({ list, history, type, recipeDetails }) {
     localStorage.setItem('inProgressRecipes', JSON.stringify(progress));
     return target.checked ? setQuant(quant + 1) : setQuant(quant - 1);
   };
-  const ingredientContainer = document.getElementById('ingredients-container');
-  const gambiarra = () => ingredientContainer.innerHTML === progress[0].html;
 
-  if (test) {
-    progress.forEach((obj, index) => obj.id === id && sameId.push(index));
-    gambiarra();
-  }
+  const ingredientContainer = document.getElementById('ingredients-container');
+
+  useEffect(() => {
+    if (test) {
+      console.log(ingredientContainer);
+      progress.forEach((obj, index) => obj.id === id
+      && sameId.push(index));
+      return ingredientContainer.innerHTML === progress[0].html;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div>
+    <div id="ingredients-container">
       { list && list.map((item, index) => (
         <div
           data-testid={ `${index}-ingredient-step` }
