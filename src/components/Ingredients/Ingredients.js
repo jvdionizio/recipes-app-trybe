@@ -48,19 +48,29 @@ function Ingredients({ recipeDetails, type, page, history }) {
   };
 
   const renderCheckBox = () => (
-    list && list.map((item, index) => (
-      <div
-        data-testid={ `${index}-ingredient-step` }
-        key={ index }
+    <div>
+      { list && list.map((item, index) => (
+        <div
+          data-testid={ `${index}-ingredient-step` }
+          key={ index }
+        >
+          <input
+            type="checkbox"
+            name="done"
+            onClick={ ({ target }) => stepDone(target) }
+          />
+          <label htmlFor="done">{ item }</label>
+        </div>
+      )) }
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ list && list.length !== quant }
+        onClick={ () => history.push('/done-recipes') }
       >
-        <input
-          type="checkbox"
-          name="done"
-          onClick={ ({ target }) => stepDone(target) }
-        />
-        <label htmlFor="done">{ item }</label>
-      </div>
-    ))
+        Finalizar Receita
+      </button>
+    </div>
   );
 
   return (
@@ -70,14 +80,6 @@ function Ingredients({ recipeDetails, type, page, history }) {
         { page === 'details' ? <RenderList list={ list } /> : renderCheckBox() }
       </section>
       <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ list && list.length !== quant }
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Finalizar Receita
-      </button>
     </div>
   );
 }
