@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import style from './Ingredients/Ingredients.module.css';
+import style from './StyleList.module.css';
 
 function RenderList({ list }) {
   return (

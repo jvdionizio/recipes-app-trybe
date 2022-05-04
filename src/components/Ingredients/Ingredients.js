@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import style from './Ingredients.module.css';
 import RenderList from '../RenderList';
+import RenderCheckBox from '../RenderCheckBox/RenderCheckBox';
 
 function Ingredients({ recipeDetails, type, page, history }) {
   const [list, setList] = useState();
-  const [quant, setQuant] = useState(0);
 
-  const VINTE_UM = 21;
-  const TRINTA_SEIS = 36;
-  const NOVE = 9;
-  const VINTE_NOVE = 29;
-  const QUARENTA_NOVE = 49;
-  let ings = [];
-  let measures = [];
+  const measures = [];
+  const ings = [];
+  const ingsIndex = [];
+  const measuresIndex = [];
 
   const sliceCond = () => {
+    const recipeKeys = Object.keys(recipeDetails[0]);
+    recipeKeys
+      .forEach((key, index) => key
+        .includes('strIngredient') && ingsIndex.push(index));
+    recipeKeys
+      .forEach((key, index) => key
+        .includes('strMeasure') && measuresIndex.push(index));
     const recipeValues = Object.values(recipeDetails[0]);
-    if (type === 'foods') {
-      ings = recipeValues.slice(NOVE, VINTE_NOVE);
-      measures = recipeValues.slice(VINTE_NOVE, QUARENTA_NOVE);
-    } else {
-      ings = recipeValues.slice(VINTE_UM, TRINTA_SEIS);
-      measures = recipeValues.slice(TRINTA_SEIS, QUARENTA_NOVE);
-    }
+    ingsIndex.forEach((index) => {
+      ings.push(recipeValues[index]);
+    });
+    measuresIndex.forEach((index) => {
+      measures.push(recipeValues[index]);
+    });
   };
 
   const getIngredientsAndMeasures = () => {
@@ -40,44 +42,22 @@ function Ingredients({ recipeDetails, type, page, history }) {
     setList(listIng);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => getIngredientsAndMeasures(), []);
-
-  const stepDone = (target) => {
-    target.nextSibling.classList.toggle(style.done);
-    return target.checked ? setQuant(quant + 1) : setQuant(quant - 1);
-  };
-
-  const renderCheckBox = () => (
-    <div>
-      { list && list.map((item, index) => (
-        <div
-          data-testid={ `${index}-ingredient-step` }
-          key={ index }
-        >
-          <input
-            type="checkbox"
-            name="done"
-            onClick={ ({ target }) => stepDone(target) }
-          />
-          <label htmlFor="done">{ item }</label>
-        </div>
-      )) }
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ list && list.length !== quant }
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Finalizar Receita
-      </button>
-    </div>
-  );
 
   return (
     <div>
       <header>Ingredients</header>
-      <section>
-        { page === 'details' ? <RenderList list={ list } /> : renderCheckBox() }
+      <section id="ingredients-container">
+        { page === 'details'
+          ? <RenderList list={ list } />
+          : (
+            <RenderCheckBox
+              list={ list }
+              history={ history }
+              type={ type }
+              recipeDetails={ recipeDetails }
+            />) }
       </section>
       <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
     </div>
