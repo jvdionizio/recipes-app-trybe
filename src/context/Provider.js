@@ -10,6 +10,7 @@ function Provider({ children }) {
   const [allRecipes, setAllRecipes] = useState([]);
   const [categoryRecipes, setCategoryRecipes] = useState([]);
   const [categorySelected, setCategorySelected] = useState('');
+  // const [favoritesRecipes, setFavoritesRecipes] = useState([]);
 
   const handleClickFood = async (input, radio) => {
     if (radio === 'ingredients') {
@@ -41,6 +42,7 @@ function Provider({ children }) {
       return inputTest;
     }
   };
+
   return (
     <Context.Provider
       value={ {
@@ -55,7 +57,10 @@ function Provider({ children }) {
         categorySelected,
         setCategorySelected,
         setFoodReturns,
-        setDrinkReturns } }
+        setDrinkReturns,
+        // favoritesRecipes,
+        // setFavoritesRecipes
+      } }
     >
       {children}
     </Context.Provider>

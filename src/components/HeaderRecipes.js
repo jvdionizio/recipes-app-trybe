@@ -1,58 +1,53 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import conditional from '../helpers/HeaderRecipesHelper';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
+const copy = require('clipboard-copy');
+
 function HeaderRecipes({ foodDetails }) {
   const [recipeDetails, setRecipeDetails] = useState();
-  let obj = {};
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+  // let obj = {};
 
-  const test = foodDetails && foodDetails[0].strDrinks === undefined
-    ? 'food' : 'drink';
-
-  const funcTest = () => {
-    const { strDrinkThumb, strDrink, strCategory,
-      idDrink, strAlcoholic } = foodDetails[0];
-    obj = {
-      id: idDrink,
-      type: 'drink',
-      nationality: '',
-      category: strCategory,
-      alcoholicOrNot: strAlcoholic,
-      name: strDrink,
-      image: strDrinkThumb,
-    };
-  };
-
-  const conditional = (testCond) => {
-    if (testCond === 'food') {
-      const { strMealThumb, strMeal, strCategory, idMeal,
-        strArea } = foodDetails[0];
-      obj = {
-        id: idMeal,
-        type: 'food',
-        nationality: strArea,
-        category: strCategory,
-        alcoholicOrNot: '',
-        name: strMeal,
-        image: strMealThumb,
-      };
-    }
-    if (testCond === 'drink') {
-      return foodDetails && funcTest();
-    }
+  const handleShare = () => {
+    copy(window.location.href);
+    setLinkCopied(true);
   };
 
   useEffect(() => {
-    conditional(test);
+    // conditional(test);
+    const obj = conditional(foodDetails);
+    console.log(obj);
     setRecipeDetails(obj);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (getFavorites !== null) {
+      const testFavorites = getFavorites.some((el) => el.id === obj.id);
+      console.log(testFavorites);
+      setIsFavorite(testFavorites);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleFavorite = () => console.log(obj);
-  // const { name, image, strCategory } = recipeDetails;
-  const cleber = recipeDetails;
-  console.log(cleber);
+  const handleClickFavorite = async (index) => {
+    if (isFavorite === false) {
+      const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const favorites = getFavorites === null ? [] : getFavorites;
+      favorites.push(recipeDetails);
+      // console.log(favorites);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
+      setIsFavorite(!isFavorite);
+    }
+    if (isFavorite === true) {
+      const getFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      const favorites = getFavorites.filter((el) => el.id !== index);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(favorites));
+      setIsFavorite(!isFavorite);
+    }
+  };
 
   return (
     <div>
@@ -76,6 +71,9 @@ function HeaderRecipes({ foodDetails }) {
             type="image"
             alt="share"
             src={ shareIcon }
+            onClick={ () => handleShare() }
+            onKeyDown={ () => handleShare() }
+            tabIndex="0"
           />
           <input
             data-testid="favorite-btn"
@@ -83,12 +81,17 @@ function HeaderRecipes({ foodDetails }) {
             alt="share"
             src={ whiteHeartIcon }
             onClick={ () => handleFavorite() }
+            src={ isFavorite === false ? whiteHeartIcon : blackHeartIcon }
+            onClick={ () => handleClickFavorite(recipeDetails.id) }
           />
           <p
             data-testId="recipe-category"
           >
             {recipeDetails.strCategory}
           </p>
+          {
+            linkCopied && <p>Link copied!</p>
+          }
         </>)}
     </div>
   );
