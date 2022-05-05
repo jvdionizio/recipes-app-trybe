@@ -5,8 +5,7 @@ import Header from '../components/Header';
 import Context from '../context/Context';
 import {
   getByIngredientsDrink,
-  // eslint-disable-next-line comma-dangle
-  getByIngredientsListDrink
+  getByIngredientsListDrink,
 } from '../helpers/TheCockTailDBAPI';
 
 function ExploreDrinksIng({ history }) {

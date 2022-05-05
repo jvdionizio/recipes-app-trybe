@@ -1,11 +1,32 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import HeaderRecipes from '../components/HeaderRecipes';
+import { getDrinkById } from '../helpers/TheCockTailDBAPI';
 
-function DrinksDetails() {
+function DrinkDetails(props) {
+  const [drinkDetails, setDrinkDetails] = useState();
+
+  const getDrink = async () => { // pegando os dados na API
+    const { match: { params: { id } } } = props;
+    const response = await getDrinkById(id); // dados totais
+    setDrinkDetails(response);
+    return response;
+  };
+  console.log(drinkDetails);
+  useEffect(() => {
+    getDrink();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
-      DrinksDetails
+      {drinkDetails && <HeaderRecipes foodDetails={ drinkDetails } />}
     </div>
   );
 }
 
-export default DrinksDetails;
+DrinkDetails.propTypes = {
+  match: PropTypes.object,
+}.isRequired;
+
+export default DrinkDetails;
