@@ -4,6 +4,7 @@ import style from '../StyleList.module.css';
 
 function RenderCheckBox({ list, history, type, recipeDetails }) {
   const [quant, setQuant] = useState(0);
+  const [usedIngs, setUsedIngs] = useState([]);
 
   const getProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
   const progress = getProgress === null ? [] : getProgress;
@@ -11,29 +12,49 @@ function RenderCheckBox({ list, history, type, recipeDetails }) {
   const test = progress.some((item) => item.id === id);
   const sameId = [];
 
-  const stepDone = (target) => {
-    target.nextSibling.classList.toggle(style.done);
+  useEffect(() => {
     if (test) {
       progress.forEach((obj, index) => obj.id === id && sameId.push(index));
-      progress[sameId[0]] = { id, html: target.parentNode.parentNode.innerHTML };
+      const arrayItens = progress[sameId[0]].itens;
+      setUsedIngs(arrayItens);
+    }
+  }, []);
+
+  const stepDone = (target) => {
+    target.nextSibling.classList.toggle(style.done);
+    console.log(target.checked);
+    if (test) {
+      console.log('if');
+      const ingsUsed = usedIngs;
+      ingsUsed.push(target.value);
+      setUsedIngs(ingsUsed);
+      progress[sameId[0]] = { id, itens: usedIngs };
     } else {
-      progress.push({ id, html: target.parentNode.parentNode.innerHTML });
+      console.log('else');
+      progress.push({ id, itens: [target.value] });
     }
     localStorage.setItem('inProgressRecipes', JSON.stringify(progress));
     return target.checked ? setQuant(quant + 1) : setQuant(quant - 1);
   };
 
-  const ingredientContainer = document.getElementById('ingredients-container');
+  // const ingredientContainer = document.getElementById('ingredients-container');
 
-  useEffect(() => {
+  /* const handleClick = ({ target }) => {
     if (test) {
       console.log(ingredientContainer);
       progress.forEach((obj, index) => obj.id === id
       && sameId.push(index));
       return ingredientContainer.innerHTML === progress[0].html;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }; */
+
+  /* const isChecked = (item) => {
+    if (usedIngs) {
+      const conditional = usedIngs.some((itemLS) => item === itemLS);
+      console.log(conditional);
+      return conditional;
+    }
+  }; */
 
   return (
     <div id="ingredients-container">
@@ -43,9 +64,11 @@ function RenderCheckBox({ list, history, type, recipeDetails }) {
           key={ index }
         >
           <input
+            value={ item }
             type="checkbox"
             name="done"
-            onClick={ ({ target }) => stepDone(target) }
+            onChange={ ({ target }) => stepDone(target) }
+            checked={ usedIngs.some((itemLS) => item === itemLS) }
           />
           <label htmlFor="done">{ item }</label>
         </div>
