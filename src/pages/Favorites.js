@@ -111,3 +111,4 @@ Favorites.propTypes = {
 }.isRequired;
 
 export default Favorites;
+// falta req 64,65
