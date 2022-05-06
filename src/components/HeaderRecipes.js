@@ -12,6 +12,7 @@ function HeaderRecipes({ foodDetails }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   // let obj = {};
+  console.log(recipeDetails);
 
   const handleShare = () => {
     copy(window.location.href);
@@ -48,6 +49,7 @@ function HeaderRecipes({ foodDetails }) {
       setIsFavorite(!isFavorite);
     }
   };
+
   return (
     <div>
       {recipeDetails && (
@@ -81,11 +83,9 @@ function HeaderRecipes({ foodDetails }) {
             src={ isFavorite === false ? whiteHeartIcon : blackHeartIcon }
             onClick={ () => handleClickFavorite(recipeDetails.id) }
           />
-          <p
-            data-testId="recipe-category"
-          >
-            {recipeDetails.strCategory}
-          </p>
+          { recipeDetails.type === 'drink' ? (
+            <p data-testId="recipe-category">{ recipeDetails.alcoholicOrNot }</p>)
+            : (<p data-testId="recipe-category">{ recipeDetails.category }</p>)}
           {
             linkCopied && <p>Link copied!</p>
           }
@@ -93,7 +93,6 @@ function HeaderRecipes({ foodDetails }) {
     </div>
   );
 }
-
 HeaderRecipes.propTypes = {
   foodDetails: PropTypes.object,
 }.isRequired;

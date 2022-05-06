@@ -1,7 +1,7 @@
 const conditional = (foodDetails) => {
   let obj = {};
   console.log(foodDetails);
-  const test = foodDetails[0].strDrink === undefined
+  const test = foodDetails && foodDetails[0].strDrink === undefined
     ? 'food' : 'drink';
   if (test === 'food') {
     const { strMealThumb, strMeal, strCategory, idMeal,
@@ -17,7 +17,7 @@ const conditional = (foodDetails) => {
     };
   }
 
-  if (test === 'drink') {
+  if (test === 'drink' && foodDetails) {
     const { strDrinkThumb, strDrink, strCategory,
       idDrink, strAlcoholic } = foodDetails[0];
     // console.log(foodDetails[0]);
