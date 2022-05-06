@@ -59,7 +59,6 @@ function Ingredients({ recipeDetails, type, page, history }) {
               recipeDetails={ recipeDetails }
             />) }
       </section>
-      <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
     </div>
   );
 }

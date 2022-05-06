@@ -10,7 +10,7 @@ function RenderList({ list }) {
           { list.map((item, index) => (
             <li
               key={ index }
-              data-testid={ `${index}-ingredient-step` }
+              data-testid={ `${index}-ingredient-name-and-measure` }
             >
               { item }
             </li>

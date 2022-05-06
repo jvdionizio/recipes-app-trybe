@@ -31,6 +31,7 @@ function DrinkInProgress({ history, match }) {
             page="progress"
             history={ history }
           />
+          <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
         </div>
       )}
     </div>
