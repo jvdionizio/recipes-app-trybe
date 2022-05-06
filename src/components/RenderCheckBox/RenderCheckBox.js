@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import style from '../StyleList.module.css';
+import finishRecipe from '../../helpers/DoneRecipesHelper';
 
 function RenderCheckBox({ list, history, type, recipeDetails }) {
   const [quant, setQuant] = useState(0);
@@ -11,6 +12,10 @@ function RenderCheckBox({ list, history, type, recipeDetails }) {
   const id = type === 'foods' ? recipeDetails[0].idMeal : recipeDetails[0].idDrink;
   const test = progress.some((item) => item.id === id);
   const sameId = [];
+
+  const getDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  const doneRecipes = getDone === null ? [] : getDone;
+  console.log(doneRecipes);
 
   useEffect(() => {
     if (test) {
@@ -35,6 +40,14 @@ function RenderCheckBox({ list, history, type, recipeDetails }) {
     }
     localStorage.setItem('inProgressRecipes', JSON.stringify(progress));
     return target.checked ? setQuant(quant + 1) : setQuant(quant - 1);
+  };
+
+  const saveDone = () => {
+    const obj = finishRecipe(recipeDetails);
+    console.log(obj);
+    doneRecipes.push(obj);
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    history.push('/done-recipes');
   };
 
   // const ingredientContainer = document.getElementById('ingredients-container');
@@ -77,7 +90,7 @@ function RenderCheckBox({ list, history, type, recipeDetails }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ list && list.length !== quant }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ () => saveDone() }
       >
         Finalizar Receita
       </button>
