@@ -9,11 +9,13 @@ const copy = require('clipboard-copy');
 function Favorites({ history }) {
   const [linkCopied, setLinkCopied] = useState(false);
   const [listFavorites, SetListFavorites] = useState([]);
+  const [renderFilter, setRenderFilter] = useState([]);
 
   useEffect(() => {
     const foodFavorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (foodFavorites !== null) {
       SetListFavorites(foodFavorites);
+      setRenderFilter(foodFavorites);
     }
     console.log(foodFavorites);
   }, []);
@@ -33,28 +35,50 @@ function Favorites({ history }) {
     return sendToDetails;
   };
 
+  const filterFavorites = (type) => {
+    if (type === 'food') {
+      return setRenderFilter(listFavorites
+        .filter((el) => el.type === 'food'));
+    }
+
+    if (type === 'drink') {
+      return setRenderFilter(listFavorites
+        .filter((el) => el.type === 'drink'));
+    }
+    return setRenderFilter(listFavorites);
+  };
+
+  const removeFavorite = (id) => {
+    const updateFilters = renderFilter.filter((el) => el.id !== id);
+    setRenderFilter(updateFilters);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(updateFilters));
+  };
+
   return (
     <div>
       <Header headerTitle="Favorite Recipes" noSearch />
       <button
         type="button"
         data-testid="filter-by-all-btn"
+        onClick={ () => filterFavorites('All') }
       >
         All
       </button>
       <button
         type="button"
         data-testid="filter-by-food-btn"
+        onClick={ () => filterFavorites('food') }
       >
         Food
       </button>
       <button
         type="button"
         data-testid="filter-by-drink-btn"
+        onClick={ () => filterFavorites('drink') }
       >
         Drinks
       </button>
-      {listFavorites.map((elem, index) => (
+      {renderFilter.map((elem, index) => (
         <div key={ index }>
           <div
             onClick={ () => redirectDetails(elem.id, elem.type) }
@@ -98,7 +122,7 @@ function Favorites({ history }) {
             type="image"
             alt="share"
             src={ blackHeartIcon }
-            onClick={ () => {} }
+            onClick={ () => removeFavorite(elem.id) }
           />
         </div>
       ))}
