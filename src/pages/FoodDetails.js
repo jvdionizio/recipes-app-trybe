@@ -50,7 +50,7 @@ function FoodDetails(props) {
             onClick={ () => redirectToProgress() }
             style={ { bottom: 0, position: 'fixed' } }
           >
-            Star Recipe
+            Start Recipe
           </button>
         </div>
       )}
