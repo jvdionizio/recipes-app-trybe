@@ -7,6 +7,7 @@ import { getMealById } from '../helpers/TheMealDBAPI';
 
 function FoodDetails(props) {
   const [recipeDetails, setRecipeDetails] = useState();
+  // const [inProgressRecipes, setInProgressRecipes] = useState([]);
   const { history } = props;
 
   const getFood = async () => { // pegando os dados na API
@@ -16,8 +17,14 @@ function FoodDetails(props) {
     return response;
   };
 
+  /* const continueRecipe = () => {
+    inProgressRecipes.map((recipe) => recipe.id === id ? ());
+  }; */
+
   useEffect(() => {
     getFood();
+    const recipeInit = localStorage.getItem('inProgressRecipes');
+    setInProgressRecipes(recipeInit);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -27,7 +34,7 @@ function FoodDetails(props) {
       : history.push(`/drikns/${recipeDetails[0].idDrink}/in-progress`);
     return sendToProgress;
   };
-
+  continueRecipe();
   return (
     <div>
       {recipeDetails && (
