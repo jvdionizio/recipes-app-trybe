@@ -10,6 +10,11 @@ function FoodDetails(props) {
   // const [inProgressRecipes, setInProgressRecipes] = useState([]);
   const { history } = props;
 
+  const videoURL = recipeDetails && recipeDetails[0].strYoutube;
+  const embedVideoURL = videoURL && videoURL.replace('watch', 'embed');
+
+  console.log(embedVideoURL);
+
   const getFood = async () => { // pegando os dados na API
     const { match: { params: { id } } } = props;
     const response = await getMealById(id); // dados totais
@@ -23,8 +28,6 @@ function FoodDetails(props) {
 
   useEffect(() => {
     getFood();
-    const recipeInit = localStorage.getItem('inProgressRecipes');
-    setInProgressRecipes(recipeInit);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,7 +37,7 @@ function FoodDetails(props) {
       : history.push(`/drikns/${recipeDetails[0].idDrink}/in-progress`);
     return sendToProgress;
   };
-  continueRecipe();
+
   return (
     <div>
       {recipeDetails && (
@@ -46,7 +49,7 @@ function FoodDetails(props) {
           />
           <p data-testid="instructions">{recipeDetails[0].strInstructions}</p>
           <iframe
-            src={ recipeDetails[0].strYoutube }
+            src={ embedVideoURL }
             title="recipe-video"
             data-testid="video"
           />

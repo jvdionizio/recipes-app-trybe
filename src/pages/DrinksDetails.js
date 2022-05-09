@@ -9,6 +9,10 @@ function DrinkDetails(props) {
   const [drinkDetails, setDrinkDetails] = useState();
   const { history } = props;
 
+  const videoURL = drinkDetails && drinkDetails[0].strYoutube;
+  console.log(videoURL);
+  const embedVideoURL = videoURL && videoURL.replace('watch', 'embed');
+
   const getDrink = async () => { // pegando os dados na API
     const { match: { params: { id } } } = props;
     const response = await getDrinkById(id); // dados totais
@@ -39,11 +43,12 @@ function DrinkDetails(props) {
             page="details"
           />
           <p data-testid="instructions">{drinkDetails[0].strInstructions}</p>
-          <iframe
-            src={ drinkDetails[0].strYoutube }
-            title="recipe-video"
-            data-testid="video"
-          />
+          { embedVideoURL && (
+            <iframe
+              src={ embedVideoURL }
+              title="recipe-video"
+              data-testid="video"
+            />) }
           <Recommended type="drinks" history={ history } />
           <button
             type="button"
