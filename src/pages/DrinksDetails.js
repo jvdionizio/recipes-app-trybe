@@ -44,7 +44,7 @@ function DrinkDetails(props) {
             title="recipe-video"
             data-testid="video"
           />
-          <Recommended />
+          <Recommended type="drinks" history={ history } />
           <button
             type="button"
             data-testid="start-recipe-btn"
