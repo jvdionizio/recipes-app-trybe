@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context/Context';
-import { getRecipes } from '../helpers/TheMealDBAPI';
 import { getDrinks } from '../helpers/TheCockTailDBAPI';
+import { getRecipes } from '../helpers/TheMealDBAPI';
+import RenderRecipes from '../styles/Render-recipes-style';
 
 function AllRecipes({ headerTitle, history }) {
   const { allRecipes, setAllRecipes } = useContext(Context);
@@ -28,10 +29,10 @@ function AllRecipes({ headerTitle, history }) {
   };
 
   return (
-    <div>
+    <div style={ { marginBottom: '90px' } }>
       { allRecipes.slice(0, DOZE)
         .map((recipe, index) => (
-          <div
+          <RenderRecipes
             data-testid={ `${index}-recipe-card` }
             key={ index }
             onClick={ () => redirectDetails(recipe) }
@@ -39,6 +40,7 @@ function AllRecipes({ headerTitle, history }) {
             role="button"
             tabIndex="0"
           >
+
             <img
               src={ headerTitle === 'Foods' ? recipe.strMealThumb : recipe.strDrinkThumb }
               data-testid={ `${index}-card-img` }
@@ -48,7 +50,9 @@ function AllRecipes({ headerTitle, history }) {
             <p data-testid={ `${index}-card-name` }>
               { headerTitle === 'Foods' ? recipe.strMeal : recipe.strDrink }
             </p>
-          </div>
+            <div />
+          </RenderRecipes>
+
         )) }
     </div>
   );

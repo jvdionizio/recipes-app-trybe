@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import context from '../context/Context';
+import SearchBarStyle, { RadioStyles } from '../styles/SearchBar-style';
 
 function SearchBar({ headerTitle }) {
   const [searchInput, setSearchInput] = useState('');
@@ -8,7 +9,7 @@ function SearchBar({ headerTitle }) {
 
   const { handleClickFood, handleClickCockTail } = useContext(context);
   return (
-    <div>
+    <SearchBarStyle>
       <form>
         <input
           type="text"
@@ -16,7 +17,8 @@ function SearchBar({ headerTitle }) {
           value={ searchInput }
           onChange={ ({ target }) => setSearchInput(target.value) }
         />
-        <label htmlFor="SearchType">
+        <RadioStyles>
+
           <label htmlFor="ing">
             <input
               name="SearchType"
@@ -26,7 +28,7 @@ function SearchBar({ headerTitle }) {
               value="ingredients"
               onChange={ ({ target }) => setTypeInput(target.value) }
             />
-            ingredients
+            Ingredients
           </label>
           <label htmlFor="nameSearch">
             <input
@@ -50,18 +52,19 @@ function SearchBar({ headerTitle }) {
             />
             First-Letter
           </label>
-        </label>
-        <button
-          type="button"
-          data-testid="exec-search-btn"
-          onClick={ () => (headerTitle === 'Foods'
-            ? handleClickFood(searchInput, typeInput)
-            : handleClickCockTail(searchInput, typeInput)) }
-        >
-          Search
-        </button>
+
+          <button
+            type="button"
+            data-testid="exec-search-btn"
+            onClick={ () => (headerTitle === 'Foods'
+              ? handleClickFood(searchInput, typeInput)
+              : handleClickCockTail(searchInput, typeInput)) }
+          >
+            Search
+          </button>
+        </RadioStyles>
       </form>
-    </div>
+    </SearchBarStyle>
   );
 }
 

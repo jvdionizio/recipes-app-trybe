@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
-import { getMealCategories, getMealByCategories } from '../helpers/TheMealDBAPI';
-import { getDrinkCategories, getDrinkByCategory } from '../helpers/TheCockTailDBAPI';
+import { getDrinkByCategory, getDrinkCategories } from '../helpers/TheCockTailDBAPI';
+import { getMealByCategories, getMealCategories } from '../helpers/TheMealDBAPI';
+import CategoriesStyle from '../styles/Categories-btn';
 
 function Categories({ headerTitle }) {
   const [renderCategories, setRenderCategories] = useState([]);
@@ -40,7 +41,7 @@ function Categories({ headerTitle }) {
   console.log(categorySelected);
 
   return (
-    <div>
+    <CategoriesStyle>
       <button
         type="button"
         data-testid="All-category-filter"
@@ -60,7 +61,7 @@ function Categories({ headerTitle }) {
             { category.strCategory }
           </button>
         )) }
-    </div>
+    </CategoriesStyle>
   );
 }
 

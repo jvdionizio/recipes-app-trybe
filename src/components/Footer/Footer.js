@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import drinkImg from '../../images/drinkIcon.svg';
-import mealImg from '../../images/mealIcon.svg';
 import exploreImg from '../../images/exploreIcon.svg';
-import style from './Footer.module.css';
+import mealImg from '../../images/mealIcon.svg';
+import FooterStyle from '../../styles/Footer-style';
 
 function Footer() {
   return (
-    <div data-testid="footer" className={ style.footerContainer }>
+    <FooterStyle data-testid="footer">
       <Link
         to="/drinks"
       >
@@ -23,7 +23,7 @@ function Footer() {
       >
         <img src={ mealImg } alt="meal" data-testid="food-bottom-btn" />
       </Link>
-    </div>
+    </FooterStyle>
   );
 }
 
