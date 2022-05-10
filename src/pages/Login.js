@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import * as thecocktaildb from '../helpers/TheCockTailDBAPI';
-import * as theMealdbApi from '../helpers/TheMealDBAPI';
+import React, { useState } from 'react';
+import {
+  LoginContainer,
+  LoginInput,
+  LoginButton,
+  LoginImage,
+  LoginBody,
+} from '../styles/login-style';
+import userIcon from '../images/user_icon_001.jpg';
+import lockIcon from '../images/icons8-lock-96 1.png';
 
 function Login({ history }) {
   const [login, setLogin] = useState({
@@ -9,14 +16,8 @@ function Login({ history }) {
     password: '',
     IsDisable: true,
   });
-  useEffect(() => {
-    theMealdbApi.getByFirstLetter('a');
-    theMealdbApi.getByIngredients('butter');
-    theMealdbApi.getByName('pie');
-    thecocktaildb.getByFirstLetterDrink('a');
-    thecocktaildb.getByIngredientsDrink('apple');
-    thecocktaildb.getByNameDrink('margarita');
-  }, []);
+  const [clicked, setClicked] = useState(false);
+
   const validateButton = () => {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const SEIS = 6;
@@ -53,31 +54,48 @@ function Login({ history }) {
     history.push('/foods');
   };
 
+  const divClick = () => {
+    setClicked(true);
+  };
+
   return (
-    <div className="Login">
-      <input
-        name="email"
-        type="email"
-        data-testid="email-input"
-        placeholder="Digite seu email"
-        onChange={ handleChange }
-      />
-      <input
-        type="password"
-        name="password"
-        onChange={ handleChange }
-        data-testid="password-input"
-        placeholder="Digite sua senha"
-      />
-      <button
-        type="submit"
-        data-testid="login-submit-btn"
-        onClick={ handleClickSubmit }
-        disabled={ login.IsDisable }
+    <LoginBody
+      clicked={ clicked }
+    >
+      <LoginContainer
+        onClick={ divClick }
+        clicked={ clicked }
       >
-        Entrar
-      </button>
-    </div>
+        <div>
+          <LoginImage src={ userIcon } alt="user icon" />
+          <LoginInput
+            name="email"
+            type="email"
+            data-testid="email-input"
+            placeholder="Email"
+            onChange={ handleChange }
+          />
+        </div>
+        <div>
+          <LoginImage src={ lockIcon } alt="lock icon" />
+          <LoginInput
+            type="password"
+            name="password"
+            onChange={ handleChange }
+            data-testid="password-input"
+            placeholder="Senha"
+          />
+        </div>
+        <LoginButton
+          type="submit"
+          data-testid="login-submit-btn"
+          onClick={ handleClickSubmit }
+          disabled={ login.IsDisable }
+        >
+          Entrar
+        </LoginButton>
+      </LoginContainer>
+    </LoginBody>
   );
 }
 
