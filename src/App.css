@@ -1,4 +1,4 @@
-.meals {
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -7,7 +7,7 @@
   font-family: sans-serif;
   height: 640px;
 
-  /* justify-content: center; */
+  justify-content: center; 
   width: 360px;
 }
 
@@ -15,7 +15,7 @@
   height: 150px;
   width: 150px;
 
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 .rocksGlass {
@@ -23,7 +23,7 @@
   max-height: 80vh;
 }
 
-/*
+
 #iceLeft {
   animation: clink .8s infinite ease;
   opacity: 0.6;
@@ -35,7 +35,7 @@
   opacity: 0.6;
   transform-origin: 60px 78px;
 }
-*/
+
 
 .meals > .logo {
   animation: shake 1.5s infinite ease;
@@ -73,4 +73,4 @@
   100% {
     transform: rotate(-10deg);
   }
-}
+} */
